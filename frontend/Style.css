@@ -1,223 +1,1091 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-    >
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
 
-    <meta name="theme-color" content="#02090c">
-    <meta name="description" content="J.A.R.V.I.S. Mobile Edition">
+html {
+    scroll-behavior: smooth;
+}
 
-    <title>J.A.R.V.I.S. Mobile Edition</title>
+body {
+    margin: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
 
-    <link
-        rel="preconnect"
-        href="https://fonts.googleapis.com"
-    >
-    <link
-        rel="preconnect"
-        href="https://fonts.gstatic.com"
-        crossorigin
-    >
-    <link
-        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    >
+    background:
+        radial-gradient(
+            circle at 50% 15%,
+            #07313a 0%,
+            #03161b 25%,
+            #02090c 55%,
+            #000 100%
+        );
 
-    <link rel="stylesheet" href="style.css">
-</head>
+    color: #dffcff;
+    font-family: "Orbitron", sans-serif;
+}
 
-<body>
 
-    <div class="background-grid"></div>
-    <div class="scanline"></div>
+/* =========================
+   BACKGROUND
+========================= */
 
-    <main class="app">
+.background-grid {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.18;
 
-        <!-- HEADER -->
-        <header class="header">
+    background-image:
+        linear-gradient(
+            rgba(0, 234, 255, 0.08) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(0, 234, 255, 0.08) 1px,
+            transparent 1px
+        );
 
-            <div class="brand">
+    background-size: 40px 40px;
 
-                <div class="logo">
-                    <span>J</span>
-                </div>
+    mask-image: linear-gradient(
+        to bottom,
+        black,
+        transparent 85%
+    );
 
-                <div class="brand-text">
-                    <h1>J.A.R.V.I.S.</h1>
-                    <p>MOBILE EDITION</p>
-                </div>
+    z-index: -2;
+}
 
-            </div>
 
-            <div class="status">
-                <span class="status-dot"></span>
-                <span>ONLINE</span>
-            </div>
+.scanline {
+    position: fixed;
+    left: 0;
+    right: 0;
+    height: 1px;
 
-        </header>
+    background: rgba(0, 234, 255, 0.15);
 
+    pointer-events: none;
+    z-index: 100;
 
-        <!-- REACTOR -->
-        <section class="reactor-section">
+    animation: scan 7s linear infinite;
+}
 
-            <div class="reactor">
 
-                <div class="reactor-glow"></div>
+/* =========================
+   APP
+========================= */
 
-                <div class="ring ring-1"></div>
-                <div class="ring ring-2"></div>
-                <div class="ring ring-3"></div>
+.app {
+    position: relative;
 
-                <div class="crosshair horizontal"></div>
-                <div class="crosshair vertical"></div>
+    width: 100%;
+    max-width: 920px;
 
-                <div class="core">
-                    <span>J</span>
-                </div>
+    min-height: 100vh;
 
-            </div>
+    margin: auto;
+    padding: 20px;
+}
 
-            <h2>SYSTEMS ONLINE</h2>
 
-            <p>
-                All J.A.R.V.I.S. systems are operational.
-            </p>
+/* =========================
+   HEADER
+========================= */
 
-        </section>
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
+    padding: 15px 4px 18px;
 
-        <!-- SYSTEM CARDS -->
-        <section class="systems">
+    border-bottom:
+        1px solid rgba(0, 234, 255, 0.18);
+}
 
-            <div class="system-card">
 
-                <div class="system-icon">⚡</div>
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
 
-                <div class="system-info">
-                    <strong>CORE SYSTEM</strong>
-                    <small>Operational</small>
-                </div>
 
-                <div class="card-indicator"></div>
+.logo {
+    position: relative;
 
-            </div>
+    width: 48px;
+    height: 48px;
 
+    border: 2px solid #00eaff;
+    border-radius: 50%;
 
-            <div class="system-card">
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-                <div class="system-icon">🧠</div>
+    color: #00eaff;
 
-                <div class="system-info">
-                    <strong>AI ENGINE</strong>
-                    <small>Ready</small>
-                </div>
+    box-shadow:
+        0 0 12px rgba(0, 234, 255, 0.35),
+        inset 0 0 12px rgba(0, 234, 255, 0.12);
 
-                <div class="card-indicator"></div>
+    animation: logoPulse 2.5s ease-in-out infinite;
+}
 
-            </div>
 
+.logo::before {
+    content: "";
 
-            <div class="system-card">
+    position: absolute;
 
-                <div class="system-icon">🛡️</div>
+    width: 58px;
+    height: 58px;
 
-                <div class="system-info">
-                    <strong>SECURITY</strong>
-                    <small>Protected</small>
-                </div>
+    border:
+        1px dashed rgba(0, 234, 255, 0.35);
 
-                <div class="card-indicator"></div>
+    border-radius: 50%;
 
-            </div>
+    animation: rotate 8s linear infinite;
+}
 
-        </section>
 
+.logo span {
+    font-size: 22px;
+    font-weight: 800;
+}
 
-        <!-- CHAT -->
-        <section class="chat-section">
 
-            <div class="section-title">
+.brand-text h1 {
+    margin: 0;
 
-                <div>
-                    <span class="title-main">
-                        J.A.R.V.I.S. CONSOLE
-                    </span>
+    font-size: 18px;
+    letter-spacing: 3px;
+}
 
-                    <span class="title-sub">
-                        COMMAND INTERFACE
-                    </span>
-                </div>
 
-                <div class="live">
-                    <span>●</span> LIVE
-                </div>
+.brand-text p {
+    margin: 5px 0 0;
 
-            </div>
+    color: #579ba4;
 
+    font-size: 8px;
+    letter-spacing: 2px;
+}
 
-            <div
-                id="chat"
-                class="chat"
-                aria-live="polite"
-                aria-label="J.A.R.V.I.S. conversation"
-            >
 
-                <div class="msg ai">
-                    <span class="message-label">
-                        J.A.R.V.I.S
-                    </span>
+.status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
 
-                    <span>
-                        Systems online. How may I assist you, Boss?
-                    </span>
-                </div>
+    color: #00ffcc;
 
-            </div>
+    font-size: 9px;
+    letter-spacing: 1px;
+}
 
 
-            <div class="input-area">
+.status-dot {
+    width: 7px;
+    height: 7px;
 
-                <input
-                    id="msg"
-                    type="text"
-                    placeholder="Enter command..."
-                    autocomplete="off"
-                    maxlength="500"
-                    aria-label="Enter command"
-                >
+    display: inline-block;
 
-                <button
-                    id="send"
-                    type="button"
-                    aria-label="Send command"
-                    title="Send command"
-                >
-                    ➤
-                </button>
+    background: #00ffcc;
+    border-radius: 50%;
 
-            </div>
+    box-shadow:
+        0 0 8px #00ffcc;
 
-            <div class="console-status">
-                <span class="status-dot"></span>
-                READY FOR COMMAND
-            </div>
+    animation: blink 1.5s infinite;
+}
 
-        </section>
 
+/* =========================
+   REACTOR
+========================= */
 
-        <!-- FOOTER -->
-        <footer>
-            <div>J.A.R.V.I.S. MOBILE EDITION</div>
-            <small>ADVANCED AI CONSOLE</small>
-        </footer>
+.reactor-section {
+    text-align: center;
 
-    </main>
+    padding: 48px 0 34px;
+}
 
 
-    <script src="script.js"></script>
+.reactor {
+    position: relative;
 
-</body>
-</html>
+    width: 220px;
+    height: 220px;
+
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.reactor-glow {
+    position: absolute;
+
+    width: 120px;
+    height: 120px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(0, 234, 255, 0.3),
+            transparent 70%
+        );
+
+    filter: blur(12px);
+
+    animation: reactorGlow 2s ease-in-out infinite;
+}
+
+
+.ring {
+    position: absolute;
+
+    border-radius: 50%;
+
+    border: 1px solid #00dfff;
+
+    box-shadow:
+        0 0 14px rgba(0, 225, 255, 0.35);
+}
+
+
+.ring-1 {
+    width: 210px;
+    height: 210px;
+
+    border-style: dashed;
+
+    animation:
+        rotate 15s linear infinite;
+}
+
+
+.ring-2 {
+    width: 175px;
+    height: 175px;
+
+    border-color:
+        rgba(0, 234, 255, 0.65);
+
+    animation:
+        rotateReverse 10s linear infinite;
+}
+
+
+.ring-3 {
+    width: 138px;
+    height: 138px;
+
+    border-width: 2px;
+
+    animation:
+        rotate 7s linear infinite;
+}
+
+
+.crosshair {
+    position: absolute;
+
+    background:
+        rgba(0, 234, 255, 0.22);
+}
+
+
+.crosshair.horizontal {
+    width: 190px;
+    height: 1px;
+}
+
+
+.crosshair.vertical {
+    width: 1px;
+    height: 190px;
+}
+
+
+.core {
+    position: relative;
+
+    width: 76px;
+    height: 76px;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #ffffff 0%,
+            #bfffff 15%,
+            #00eaff 38%,
+            #007b8a 68%,
+            #00252b 100%
+        );
+
+    box-shadow:
+        0 0 20px #00eaff,
+        0 0 45px rgba(0, 234, 255, 0.8),
+        0 0 90px rgba(0, 234, 255, 0.25);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    animation:
+        pulse 2s ease-in-out infinite;
+
+    z-index: 2;
+}
+
+
+.core::after {
+    content: "";
+
+    position: absolute;
+    inset: 7px;
+
+    border:
+        1px solid rgba(255, 255, 255, 0.55);
+
+    border-radius: 50%;
+}
+
+
+.core span {
+    position: relative;
+    z-index: 3;
+
+    color: #001114;
+
+    font-size: 30px;
+    font-weight: 800;
+}
+
+
+.reactor-section h2 {
+    margin: 20px 0 6px;
+
+    color: #00eaff;
+
+    font-size: 17px;
+    letter-spacing: 3px;
+}
+
+
+.reactor-section p {
+    margin: 0;
+
+    color: #60949b;
+
+    font-size: 9px;
+    letter-spacing: 0.5px;
+}
+
+
+/* =========================
+   SYSTEM CARDS
+========================= */
+
+.systems {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 12px;
+
+    margin-bottom: 25px;
+}
+
+
+.system-card {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    min-height: 72px;
+
+    padding: 14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(0, 38, 45, 0.65),
+            rgba(0, 15, 19, 0.7)
+        );
+
+    border:
+        1px solid rgba(0, 234, 255, 0.18);
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.system-card::before {
+    content: "";
+
+    position: absolute;
+    top: 0;
+    left: -100%;
+
+    width: 70%;
+    height: 1px;
+
+    background: #00eaff;
+
+    box-shadow: 0 0 10px #00eaff;
+
+    animation: cardScan 4s linear infinite;
+}
+
+
+.system-card:hover {
+    transform: translateY(-3px);
+
+    border-color:
+        rgba(0, 234, 255, 0.5);
+
+    box-shadow:
+        0 8px 25px rgba(0, 234, 255, 0.08);
+}
+
+
+.system-icon {
+    font-size: 20px;
+}
+
+
+.system-info {
+    flex: 1;
+}
+
+
+.system-info strong {
+    display: block;
+
+    font-size: 9px;
+    letter-spacing: 1px;
+}
+
+
+.system-info small {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #00ffcc;
+
+    font-size: 7px;
+}
+
+
+.card-indicator {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: #00ffcc;
+
+    box-shadow:
+        0 0 8px #00ffcc;
+}
+
+
+/* =========================
+   CHAT
+========================= */
+
+.chat-section {
+    border:
+        1px solid rgba(0, 234, 255, 0.2);
+
+    border-radius: 14px;
+
+    padding: 15px;
+
+    background:
+        rgba(0, 15, 19, 0.78);
+
+    box-shadow:
+        0 0 30px rgba(0, 234, 255, 0.05);
+}
+
+
+.section-title {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    padding-bottom: 12px;
+
+    border-bottom:
+        1px solid rgba(0, 234, 255, 0.12);
+}
+
+
+.title-main {
+    display: block;
+
+    color: #00eaff;
+
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+
+.title-sub {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #3d6c72;
+
+    font-size: 6px;
+    letter-spacing: 1px;
+}
+
+
+.live {
+    color: #00ffcc;
+
+    font-size: 8px;
+    letter-spacing: 1px;
+}
+
+
+.chat {
+    height: 250px;
+
+    overflow-y: auto;
+
+    padding: 14px 3px;
+
+    scrollbar-width: thin;
+    scrollbar-color: #00eaff transparent;
+}
+
+
+.chat::-webkit-scrollbar {
+    width: 4px;
+}
+
+
+.chat::-webkit-scrollbar-thumb {
+    background: #00eaff;
+    border-radius: 10px;
+}
+
+
+.msg {
+    max-width: 88%;
+
+    padding: 11px 13px;
+
+    margin-bottom: 10px;
+
+    border-radius: 8px;
+
+    font-size: 10px;
+    line-height: 1.6;
+
+    animation: messageIn 0.25s ease;
+}
+
+
+.msg.ai {
+    background:
+        rgba(0, 234, 255, 0.07);
+
+    border-left:
+        2px solid #00eaff;
+}
+
+
+.msg.user {
+    margin-left: auto;
+
+    background:
+        rgba(0, 255, 204, 0.06);
+
+    border-right:
+        2px solid #00ffcc;
+
+    text-align: right;
+}
+
+
+.message-label {
+    display: block;
+
+    margin-bottom: 4px;
+
+    color: #00eaff;
+
+    font-size: 7px;
+    letter-spacing: 1px;
+}
+
+
+.msg.user .message-label {
+    color: #00ffcc;
+}
+
+
+.input-area {
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: 8px;
+}
+
+
+#msg {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 13px;
+
+    border:
+        1px solid rgba(0, 234, 255, 0.25);
+
+    border-radius: 8px;
+
+    background: #020b0e;
+
+    color: white;
+
+    outline: none;
+
+    font-family: "Orbitron", sans-serif;
+    font-size: 9px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+#msg::placeholder {
+    color: #42666b;
+}
+
+
+#msg:focus {
+    border-color: #00eaff;
+
+    box-shadow:
+        0 0 12px rgba(0, 234, 255, 0.15);
+}
+
+
+#send {
+    width: 48px;
+    min-width: 48px;
+
+    border:
+        1px solid #00eaff;
+
+    border-radius: 8px;
+
+    background:
+        rgba(0, 234, 255, 0.1);
+
+    color: #00eaff;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    transition:
+        0.2s ease;
+}
+
+
+#send:hover {
+    background: #00eaff;
+
+    color: #001114;
+
+    box-shadow:
+        0 0 18px rgba(0, 234, 255, 0.5);
+}
+
+
+#send:active {
+    transform: scale(0.94);
+}
+
+
+#send:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+
+.console-status {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-top: 10px;
+
+    color: #315b60;
+
+    font-size: 6px;
+    letter-spacing: 1px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+    text-align: center;
+
+    padding: 28px 0 12px;
+
+    color: #315b60;
+
+    font-size: 7px;
+    letter-spacing: 2px;
+}
+
+
+footer small {
+    display: block;
+
+    margin-top: 6px;
+
+    color: #1e4145;
+
+    font-size: 5px;
+
+    letter-spacing: 1px;
+}
+
+
+/* =========================
+   ANIMATIONS
+========================= */
+
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+@keyframes rotateReverse {
+    from {
+        transform: rotate(360deg);
+    }
+
+    to {
+        transform: rotate(0deg);
+    }
+}
+
+
+@keyframes pulse {
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.08);
+    }
+}
+
+
+@keyframes reactorGlow {
+    0%,
+    100% {
+        opacity: 0.6;
+        transform: scale(0.9);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.15);
+    }
+}
+
+
+@keyframes blink {
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+}
+
+
+@keyframes logoPulse {
+    0%,
+    100% {
+        box-shadow:
+            0 0 12px rgba(0, 234, 255, 0.35);
+    }
+
+    50% {
+        box-shadow:
+            0 0 24px rgba(0, 234, 255, 0.65);
+    }
+}
+
+
+@keyframes scan {
+    from {
+        top: -5px;
+    }
+
+    to {
+        top: 105vh;
+    }
+}
+
+
+@keyframes cardScan {
+    from {
+        left: -100%;
+    }
+
+    to {
+        left: 150%;
+    }
+}
+
+
+@keyframes messageIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .app {
+        padding: 12px;
+    }
+
+
+    .header {
+        padding-top: 10px;
+    }
+
+
+    .brand-text h1 {
+        font-size: 16px;
+        letter-spacing: 2px;
+    }
+
+
+    .logo {
+        width: 42px;
+        height: 42px;
+    }
+
+
+    .logo::before {
+        width: 52px;
+        height: 52px;
+    }
+
+
+    .status {
+        font-size: 8px;
+    }
+
+
+    .reactor-section {
+        padding: 35px 0 28px;
+    }
+
+
+    .reactor {
+        width: 185px;
+        height: 185px;
+    }
+
+
+    .ring-1 {
+        width: 175px;
+        height: 175px;
+    }
+
+
+    .ring-2 {
+        width: 145px;
+        height: 145px;
+    }
+
+
+    .ring-3 {
+        width: 115px;
+        height: 115px;
+    }
+
+
+    .crosshair.horizontal {
+        width: 160px;
+    }
+
+
+    .crosshair.vertical {
+        height: 160px;
+    }
+
+
+    .core {
+        width: 65px;
+        height: 65px;
+    }
+
+
+    .core span {
+        font-size: 26px;
+    }
+
+
+    .reactor-section h2 {
+        font-size: 14px;
+        letter-spacing: 2px;
+    }
+
+
+    .reactor-section p {
+        font-size: 8px;
+    }
+
+
+    .systems {
+        grid-template-columns: 1fr;
+
+        gap: 9px;
+    }
+
+
+    .system-card {
+        min-height: 62px;
+    }
+
+
+    .chat {
+        height: 210px;
+    }
+
+
+    .msg {
+        max-width: 94%;
+    }
+
+
+    #msg {
+        font-size: 9px;
+    }
+}
+
+
+@media (max-width: 360px) {
+
+    .brand-text h1 {
+        font-size: 14px;
+    }
+
+
+    .brand-text p {
+        font-size: 7px;
+    }
+
+
+    .status {
+        font-size: 7px;
+    }
+
+
+    .reactor {
+        width: 165px;
+        height: 165px;
+    }
+
+
+    .ring-1 {
+        width: 155px;
+        height: 155px;
+    }
+
+
+    .ring-2 {
+        width: 130px;
+        height: 130px;
+    }
+
+
+    .ring-3 {
+        width: 105px;
+        height: 105px;
+    }
+}
+
+
+/* Reduce animation for accessibility */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+    }
+    }
